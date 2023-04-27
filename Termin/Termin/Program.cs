@@ -38,29 +38,34 @@ namespace Termin
                     case "ls":
                         {
                             ls cls = new ls();
-                            
+
                             if (str.Length == 1)
                             {
                                 cls.rec();
                             }
-                            else if(str.Length > 2)
+                            else if (str.Length > 2)
                             {
                                 key1 = str[1];
                                 key2 = str[2];
-                               if(cls.keys(key1, key2))
+                                if (cls.keys(key1, key2))
                                 {
                                     cls.rec(key1, key2);
                                 }
-                                
                             }
                             else
                             {
                                 key1 = str[1];
-                                if(cls.keys(key1))
+                                if (cls.keys(key1))
                                 {
                                     cls.rec(key1);
-                                } 
+                                }
                             }
+                            break;
+                        }
+                    case "pwd":
+                        {
+                            pwd cls = new pwd();
+                            cls.rec();
                             break;
                         }
                     default:

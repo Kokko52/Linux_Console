@@ -12,7 +12,7 @@ namespace Termin
         public string key1, key2;
         public bool keys(string key1 = "", string key2 = "")
         {
-            if (key1 != "-a" && key1 != "-r" && key1 != "-X")
+            if (key1 != "--help" && key1 != "-a" && key1 != "-r" && key1 != "-X")
             {           
                 Console.WriteLine("ls: unknown option -" + key1);
                 return false;
@@ -30,7 +30,11 @@ namespace Termin
         {
             string[] files = Directory.GetFiles(Environment.CurrentDirectory);
             List<string> ls = new List<string>(files);
-            if ((key1 == "-a" && key2 == "-r") || (key1 == "-r" && key2 == "-a"))
+            if(key1 == "--help")
+            {
+                Console.WriteLine("help");
+            }
+            else if ((key1 == "-a" && key2 == "-r") || (key1 == "-r" && key2 == "-a"))
             {
                 ls.Sort();
                 ls.Reverse();
@@ -38,6 +42,7 @@ namespace Termin
                 {
                     Console.WriteLine(Path.GetFileName(list));
                 }
+                return;
             }
             else if((key1 == "-a" && key2 == "-X") || (key1 == "-X" && key2 == "-a"))
             {
@@ -46,6 +51,7 @@ namespace Termin
                 {
                         Console.WriteLine(Path.GetFileName(list));
                 }
+                return;
             }
             else if (key1 == "-r" || key2 == "-r")
             {
@@ -58,6 +64,7 @@ namespace Termin
                     else
                         Console.WriteLine(Path.GetFileName(list));
                 }
+                return;
             }
             else if(key1 == "-X" || key2 == "-X")
             {
@@ -69,6 +76,7 @@ namespace Termin
                     else
                         Console.WriteLine(Path.GetFileName(list));
                 }
+                return;
             }
             else if (key1 == "-a" || key2 == "-a")
             {
@@ -76,6 +84,7 @@ namespace Termin
                 {
                     Console.WriteLine(Path.GetFileName(list));
                 }
+                return;
             }
             else
             {
@@ -86,6 +95,7 @@ namespace Termin
                     else
                         Console.WriteLine(Path.GetFileName(list));
                 }
+                return;
             }
         }
     }
