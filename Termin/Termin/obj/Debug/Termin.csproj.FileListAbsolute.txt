@@ -1,0 +1,6 @@
+D:\Kokurin\week3\Termin\Termin\bin\Debug\Termin.exe.config
+D:\Kokurin\week3\Termin\Termin\bin\Debug\Termin.exe
+D:\Kokurin\week3\Termin\Termin\bin\Debug\Termin.pdb
+D:\Kokurin\week3\Termin\Termin\obj\Debug\Termin.csprojResolveAssemblyReference.cache
+D:\Kokurin\week3\Termin\Termin\obj\Debug\Termin.exe
+D:\Kokurin\week3\Termin\Termin\obj\Debug\Termin.pdb
