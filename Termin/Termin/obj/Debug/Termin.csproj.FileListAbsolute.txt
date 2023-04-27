@@ -4,3 +4,11 @@ D:\Kokurin\week3\Termin\Termin\bin\Debug\Termin.pdb
 D:\Kokurin\week3\Termin\Termin\obj\Debug\Termin.csprojResolveAssemblyReference.cache
 D:\Kokurin\week3\Termin\Termin\obj\Debug\Termin.exe
 D:\Kokurin\week3\Termin\Termin\obj\Debug\Termin.pdb
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\bin\Debug\Termin.exe.config
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\bin\Debug\Termin.exe
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\bin\Debug\Termin.pdb
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\obj\Debug\Termin.csproj.AssemblyReference.cache
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\obj\Debug\Termin.csproj.SuggestedBindingRedirects.cache
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\obj\Debug\Termin.csproj.CoreCompileInputs.cache
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\obj\Debug\Termin.exe
+D:\Учеба\3 курс\Практика\3 неделя\Termin\Termin\obj\Debug\Termin.pdb
