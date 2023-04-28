@@ -13,6 +13,8 @@ namespace Termin
         public static string key2;
         public static string key3;
         public static string console;
+        public static string options1;
+        public static string options2;
         public static string directory_path = Environment.CurrentDirectory;
         public static string path;
         static void Main(string[] args)
@@ -26,8 +28,13 @@ namespace Termin
                 path = " ";
                 console = "[" + Environment.UserName + "@" + Environment.UserDomainName + " " + directory_path + "] ";
                 Console.Write(console);
-                string[] str = Console.ReadLine().Split(' ');
-                switch (str[0])
+                //full string
+                string str = Console.ReadLine();
+                //command
+                string str_command = str.Split(' ')[0];
+                //parts string
+                string[] qwe = str.Split(' ');
+                switch (str_command)
                 {
                     #region man
                     case "man":
@@ -47,27 +54,12 @@ namespace Termin
                     case "ls":
                         {
                             ls cls = new ls();
-
-                            if (str.Length == 1)
+                            cls.str = str;
+                            if (cls.err())
                             {
-                                cls.rec();
-                            }
-                            else if (str.Length > 2)
-                            {
-                                key1 = str[1];
-                                key2 = str[2];
-                                if (cls.keys(key1, key2))
-                                {
-                                    cls.rec(key1, key2);
-                                }
-                            }
-                            else
-                            {
-                                key1 = str[1];
-                                if (cls.keys(key1))
-                                {
-                                    cls.rec(key1);
-                                }
+                                Console.WriteLine("\t");
+                                cls.begin();
+                                Console.WriteLine("\t");
                             }
                             break;
                         }
@@ -76,49 +68,62 @@ namespace Termin
                     case "pwd":
                         {
                             pwd cls = new pwd();
+                            Console.WriteLine("\t");
                             cls.rec();
+                            Console.WriteLine("\t");
                             break;
                         }
                     #endregion
+                    #region cd
                     case "cd":
                         {
-                           try
-                           {
-                                string dir = str[1];
-                                cd cls = new cd();
-
-                              directory_path = cls.keys(dir, directory_path);
-                           }
-                           catch (System.IndexOutOfRangeException)
-                           {
-                               directory_path = "~";
-                               Console.WriteLine("");
-                           }
+                            cd cls = new cd();
+                            cls.str = str;
+                            directory_path = cls.keys();
                             break;
                         }
+                    #endregion
+                    #region mkdir
                     case "mkdir":
+                        {
+                            mkdir cls = new mkdir();
+                            cls.str = str;
+                            if(cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region rmdir
+                    case "rmdir":
                         {
                             try
                             {
-                               string options1 = str[1];
-                               string options2 = str[2];
-                                mkdir cls = new mkdir();
-                                cls.keys(options1, directory_path);
+                                //  options1 = str[1];
+                                //   options2 = str[2];
+                                rmdir cls = new rmdir();
+                                cls.keys(options1);
                             }
-                            catch (System.IndexOutOfRangeException)
+                            catch
                             {
-                                Console.WriteLine("\nmkdir: missing operand\n" + 
-                                "Try \'mkdir --help\' for more information\n");
+                                if (options1 != null)
+                                {
+                                    rmdir cls = new rmdir();
+                                    cls.keys(options1);
+                                }
+                                else
+                                    Console.WriteLine("\nrmdir: missing operand\n" +
+                                    "Try 'rmdir --help' for more information.\n");
                             }
                             break;
                         }
-                    case "rmdir":
-                        {
-                            break;
-                        }
+                    #endregion
+                    #region command not found
                     default:
                         Console.WriteLine("command not found");
                         break;
+                        #endregion
                 }
             }
 

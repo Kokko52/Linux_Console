@@ -17,4 +17,3 @@ D:\Kokurin\3 неделя\Termin\Termin\obj\Debug\Termin.exe
 D:\Kokurin\3 неделя\Termin\Termin\obj\Debug\Termin.pdb
 D:\Kokurin\3 неделя\Termin\Termin\bin\Debug\Termin.exe
 D:\Kokurin\3 неделя\Termin\Termin\bin\Debug\Termin.pdb
-D:\Kokurin\3 неделя\Termin\Termin\obj\Debug\Termin.csprojResolveAssemblyReference.cache

@@ -9,21 +9,25 @@ namespace Termin
 {
     class cd
     {
-        public string keys(string key1 = "", string path = "")
+        public string str;
+        public static string directory_path = Environment.CurrentDirectory;
+        public string keys()
         {
-            string Path = "";
+            /*  [0] - commad
+                [1] - directory  */
+            string[] element = str.Split(' '); //получение отдельных элементов строки
+            string path = "";
             try
             {
-                Directory.SetCurrentDirectory(key1);
-                Path = Directory.GetCurrentDirectory();
-                var info = new DirectoryInfo(Path);
+                Directory.SetCurrentDirectory(element[1]);
+                path = Directory.GetCurrentDirectory();
+                var info = new DirectoryInfo(directory_path);
             }
             catch
             {
                 Console.WriteLine("No such directory");
-                Path = path;
             }
-            return Path;
+            return path;
         }
     }
 }
