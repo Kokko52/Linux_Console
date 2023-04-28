@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text;  
 using System.Threading.Tasks;
 
 namespace Termin
@@ -28,8 +29,9 @@ namespace Termin
         }
         public void rec(string key1 = "", string key2 = "")
         {
-            string[] files = Directory.GetFiles(Environment.CurrentDirectory);
-            List<string> ls = new List<string>(files);
+            string[] file = Directory.GetFileSystemEntries(Environment.CurrentDirectory);
+            List<string> ls = new List<string>(file);
+           
             if(key1 == "--help")
             {
                 Console.WriteLine("help");
@@ -94,8 +96,7 @@ namespace Termin
                     { }
                     else
                         Console.WriteLine(Path.GetFileName(list));
-                }
-                return;
+                }            
             }
         }
     }
