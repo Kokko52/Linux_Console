@@ -76,6 +76,10 @@ namespace Termin
                 {
                     check_key1 = -1;
                 }
+                if (element[1] == list[i] && element[2] == "-p")
+                {
+                    check_key1 = -1;
+                }
                 //mkdir -p 'name'
                 if (element[1] == list[i] && element[2] != "")
                 {
@@ -116,69 +120,75 @@ namespace Termin
         }
         public void begin()
         {
-            //getting string elements
-            string[] element = new string[] { };
-            element = str.Split(' ');
+            try
+            {
+                //getting string elements
+                string[] element = new string[] { };
+                element = str.Split(' ');
 
-            //adding null elements
-            if (element.ElementAtOrDefault(1) == null)
-            {
-                Array.Resize(ref element, element.Length + 1);
-                element[element.Length - 1] = "";
-            }
-            if (element.ElementAtOrDefault(2) == null)
-            {
-                Array.Resize(ref element, element.Length + 1);
-                element[element.Length - 1] = "";
-            }
+                //adding null elements
+                if (element.ElementAtOrDefault(1) == null)
+                {
+                    Array.Resize(ref element, element.Length + 1);
+                    element[element.Length - 1] = "";
+                }
+                if (element.ElementAtOrDefault(2) == null)
+                {
+                    Array.Resize(ref element, element.Length + 1);
+                    element[element.Length - 1] = "";
+                }
 
-            switch (element[1])
-            {
-                case "--help":
-                    {
-                        string path_man = Directory.GetCurrentDirectory().Replace("bin\\Debug", "") + "man\\mkdir.txt";
-                        using (StreamReader sr = new StreamReader(path_man))
+                switch (element[1])
+                {
+                    case "--help":
                         {
-                            Console.WriteLine(sr.ReadToEnd());
+                            help cls = new help();
+                            cls.helping("mkdir");
+                            Console.WriteLine();
+                            break;
                         }
-                        break;
-                    }
-                case "-p":
-                    {
-                        string[] files = Directory.GetDirectories(path);
-                        #region checking for files
-                        for (int i = 0; i < files.Length; i++)
+                    case "-p":
                         {
-                            string name_old_directory = Path.GetFileName(files[i]);
-                            if (name_old_directory == element[2])
+                            string[] files = Directory.GetDirectories(path);
+                            #region checking for files
+                            for (int i = 0; i < files.Length; i++)
                             {
-                                Console.WriteLine("mkdir: cannot create directory \'" + element[2] + "\': File exists");
-                                break;
+                                string name_old_directory = Path.GetFileName(files[i]);
+                                if (name_old_directory == element[2])
+                                {
+                                    Console.WriteLine("mkdir: cannot create directory \'" + element[2] + "\': File exists");
+                                    break;
+                                }
                             }
-                        }
-                        #endregion
-                        Directory.CreateDirectory(path + "\\" + element[2]);
-                        break;
-                    }
-                default:
-                    {
-                        string[] files = Directory.GetDirectories(path);
-                        #region checking for files
-                        for (int i = 0; i < files.Length; i++)
-                        {
-                            string name_old_directory = Path.GetFileName(files[i]);
-                            if (name_old_directory == element[1])
+                            #endregion
+                            try
                             {
-                                Console.WriteLine("mkdir: cannot create directory \'" + element[2] + "\': File exists");
-                                break;
+                                Directory.CreateDirectory(path + "\\" + element[2]);
                             }
+                            catch (System.IO.DirectoryNotFoundException) { Console.WriteLine("\nmkdir: cannot remove \'" + element[2] + "\': No such file or directory\n"); }
+                            break;
                         }
-                        #endregion
-                        Directory.CreateDirectory(path + "\\" + element[1]);
-                        break;
-                    }
-            }
 
+                    default:
+                        {
+                            string[] files = Directory.GetDirectories(path);
+                            #region checking for files
+                            for (int i = 0; i < files.Length; i++)
+                            {
+                                string name_old_directory = Path.GetFileName(files[i]);
+                                if (name_old_directory == element[1])
+                                {
+                                    Console.WriteLine("mkdir: cannot create directory \'" + element[2] + "\': File exists");
+                                    break;
+                                }
+                            }
+                            #endregion
+                            Directory.CreateDirectory(path + "\\" + element[1]);
+                            break;
+                        }
+                }
+            }
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
         }
     }
 }

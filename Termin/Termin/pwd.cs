@@ -8,15 +8,21 @@ namespace Termin
 {
     internal class pwd
     {
-        public string key1;
-        public string key2;
-        public bool keys(string key1 = "", string key2 = "")
+        public string str;
+        public void begin()
         {
-            return true;
-        }
-        public void rec()
-        {
-            Console.WriteLine(Environment.CurrentDirectory);
+            try
+            {
+                if (str == "pwd --help")
+                {
+                    help cls = new help();
+                    cls.helping("pwd");
+                    Console.WriteLine();
+                    return;
+                }
+                Console.WriteLine(Environment.CurrentDirectory);
+            }
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
         }
     }
 }

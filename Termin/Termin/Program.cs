@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,14 +19,12 @@ namespace Termin
         public static string options2;
         public static string directory_path = Environment.CurrentDirectory;
         public static string path;
+
         static void Main(string[] args)
         {
-
+            
             while (true)
             {
-                //string[] directory_name = (Environment.CurrentDirectory).Split('\\');
-                //int int_dir = directory_name.Length - 1;
-                //directory_path= Environment.CurrentDirectory;
                 path = " ";
                 console = "[" + Environment.UserName + "@" + Environment.UserDomainName + " " + directory_path + "] ";
                 Console.Write(console);
@@ -40,13 +40,12 @@ namespace Termin
                     case "man":
                         {
                             man cls = new man();
-                            // cls.str = str;
-                            cls.err();
-                            //bool hlp = cls.help();
-                            //bool key1 = cls.key_1();
-                            //bool key2 = cls.key_2();
-                            //bool key3 = cls.key_3();
-                            //cls.print();
+                            cls.str = str;
+                            if(cls.err())
+                            {
+                                cls.begin();
+                            }
+                            
                             break;
                         }
                     #endregion
@@ -69,7 +68,8 @@ namespace Termin
                         {
                             pwd cls = new pwd();
                             Console.WriteLine("\t");
-                            cls.rec();
+                            cls.str = str;
+                            cls.begin();
                             Console.WriteLine("\t");
                             break;
                         }
@@ -88,7 +88,7 @@ namespace Termin
                         {
                             mkdir cls = new mkdir();
                             cls.str = str;
-                            if(cls.err())
+                            if (cls.err())
                             {
                                 cls.begin();
                             }
@@ -98,32 +98,233 @@ namespace Termin
                     #region rmdir
                     case "rmdir":
                         {
-                            try
+                            rmdir cls = new rmdir();
+                            cls.str = str;
+                            if (cls.err())
                             {
-                                //  options1 = str[1];
-                                //   options2 = str[2];
-                                rmdir cls = new rmdir();
-                                cls.keys(options1);
-                            }
-                            catch
-                            {
-                                if (options1 != null)
-                                {
-                                    rmdir cls = new rmdir();
-                                    cls.keys(options1);
-                                }
-                                else
-                                    Console.WriteLine("\nrmdir: missing operand\n" +
-                                    "Try 'rmdir --help' for more information.\n");
+                                cls.begin();
                             }
                             break;
                         }
                     #endregion
+                    #region cat
+                    case "cat":
+                        {
+                            cat cls = new cat();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region exit
+                    case "exit":
+                        {
+                            exit cls = new exit();
+                            cls.str = str;
+                            cls.begin();
+                            break;
+                        }
+                    #endregion
+                    #region arch
+                    case "arch":
+                        {
+                            if(str == "arch --help")
+                            {
+                                help cls = new help();
+                                cls.helping("arch");
+                                Console.WriteLine();
+                                break;
+                            }
+                            Console.WriteLine(Environment.Is64BitOperatingSystem ? "x64" : "x32");
+                            break;
+                        }
+                    #endregion
+                    #region touch
+                    case "touch":
+                        {
+                            touch cls = new touch();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region rm
+                    case "rm":
+                        {
+                            //rm *  - удаление всх файлов
+                            //rm -r 'dir' - удаление dir и ее содерж
+                            //rm -d - удаление пустых директорий
+                            rm cls = new rm();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region clear
+                    case "clear":
+                        {
+                            if (str == "clear --help")
+                            {
+                                help cls = new help();
+                                cls.helping("clear");
+                                Console.WriteLine();
+                                break;
+                            }
+                            Console.Clear();
+                            break;
+                        }
+                    #endregion
+                    #region date
+                    case "date":
+                        {
+                            date cls = new date();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region head
+                    case "head":
+                        {
+                            head cls = new head();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region ps
+                    case "ps":
+                        {
+                            ps cls = new ps();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region uname
+                    case "uname":
+                        {
+                            uname cls = new uname();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+
+                            break;
+                        }
+                    #endregion
+                    #region tail
+                    case "tail":
+                        {
+                            tail cls = new tail();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region wc
+                    case "wc":
+                        {
+                            wc cls = new wc();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region du
+                    case "du":
+                        {
+                            du cls = new du();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region cp
+                    case "cp":
+                        {
+                            cp cls = new cp();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    case "kill":
+                        {
+                            kill cls = new kill();
+                            cls.str = str;
+                            if(cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #region df
+                    case "df":
+                        {
+                            df cls = new df();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    #region pwgen
+                    case "pwgen":
+                        {
+                            pwgen cls = new pwgen();
+                            cls.str = str;
+                            if (cls.err())
+                            {
+                                cls.begin();
+                            }
+                            break;
+                        }
+                    #endregion
+                    case "hexdump":
+                        {
+                            hexdump cls = new hexdump();
+                            cls.HEXDUMP(path + "\\" + qwe[1]);
+                            break;
+                        }
                     #region command not found
                     default:
                         Console.WriteLine("command not found");
                         break;
-                        #endregion
+                    #endregion
                 }
             }
 

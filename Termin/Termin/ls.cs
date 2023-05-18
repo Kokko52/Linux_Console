@@ -30,7 +30,7 @@ namespace Termin
             element = str.Split(' ');
 
             //list keys
-            var list = new List<string>() { "--help", "-a", "-r", "-X" };
+            var list = new List<string>() { "--help", "-a", "-r", "-X", "-m" };
 
             int check_key1 = 0;
             int check_key2 = 0;
@@ -73,75 +73,142 @@ namespace Termin
             }
             return true;
         }
-        public void begin()     
+        public void begin()
         {
-            //getting string elements
-            string[] element = new string[] { };
-            element = str.Split(' ');
+            try
+            {
+                //getting string elements
+                string[] element = new string[] { };
+                element = str.Split(' ');
 
-            //adding null elements
-            if (element.ElementAtOrDefault(1) == null)
-            {
-                Array.Resize(ref element, element.Length + 1);
-                element[element.Length - 1] = "";
-            }
-            if (element.ElementAtOrDefault(2) == null)
-            {
-                Array.Resize(ref element, element.Length + 1);
-                element[element.Length - 1] = "";
-            }
-            //adding files from directory
-            string[] file = Directory.GetFileSystemEntries(Environment.CurrentDirectory);
-            List<string> ls = new List<string>(file);
+                //adding null elements
+                if (element.ElementAtOrDefault(1) == null)
+                {
+                    Array.Resize(ref element, element.Length + 1);
+                    element[element.Length - 1] = "";
+                }
+                if (element.ElementAtOrDefault(2) == null)
+                {
+                    Array.Resize(ref element, element.Length + 1);
+                    element[element.Length - 1] = "";
+                }
+                //adding files from directory
+                string[] file = Directory.GetFileSystemEntries(Environment.CurrentDirectory);
+                List<string> ls = new List<string>(file);
 
-            switch (element[1])
-            {
-                case "--help":
-                    {
-                        string path_man = Directory.GetCurrentDirectory().Replace("bin\\Debug", "") + "man\\ls.txt";
-                        using (StreamReader sr = new StreamReader(path_man))
+                switch (element[1])
+                {
+                    case "--help":
                         {
-                            Console.WriteLine(sr.ReadToEnd());
+                            help cls = new help();
+                            cls.helping("ls");
+                            Console.WriteLine();
+                            break;
                         }
-                        break;
-                    }
-                case "-a":
-                    {
-                        if (element[2] == "" || element[2] == "-a")
+                    case "-a":
                         {
+                            if (element[2] == "" || element[2] == "-a")
+                            {
+                                foreach (string list in ls)
+                                {
+                                    Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            else if (element[2] == "-r")
+                            {
+                                ls.Sort();
+                                ls.Reverse();
+                                foreach (string list in ls)
+                                {
+                                    Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            else if (element[2] == "-X")
+                            {
+                                ls.Sort();
+                                foreach (string list in ls)
+                                {
+                                    Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            break;
+                        }
+                    case "-r":
+                        {
+                            if (element[2] == "" || element[2] == "-r" || element[2] == "-X")
+                            {
+                                ls.Sort();
+                                ls.Reverse();
+                                foreach (string list in ls)
+                                {
+                                    if ((File.GetAttributes(list) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                                    { }
+                                    else
+                                        Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            else if (element[2] == "-a")
+                            {
+                                ls.Sort();
+                                ls.Reverse();
+                                foreach (string list in ls)
+                                {
+                                    Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            break;
+                        }
+                    case "-X":
+                        {
+                            if (element[2] == "" || element[2] == "-X" || element[2] == "-r")
+                            {
+                                ls.Sort();
+                                foreach (string list in ls)
+                                {
+                                    if ((File.GetAttributes(list) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                                    { }
+                                    else
+                                        Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            else if (element[2] == "-a")
+                            {
+                                ls.Sort();
+                                foreach (string list in ls)
+                                {
+                                    Console.WriteLine(Path.GetFileName(list));
+                                }
+                                return;
+                            }
+                            break;
+                        }
+                    case "-m":
+                        {
+                            int ch = 0;
                             foreach (string list in ls)
                             {
-                                Console.WriteLine(Path.GetFileName(list));
+                                if ((File.GetAttributes(list) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                                { }
+                                else
+                                {
+                                    Console.Write(Path.GetFileName(list));
+                                    if (!(ch == ls.Count - 1))
+                                    {
+                                        Console.Write(", ");
+                                    }
+                                }
+                                ++ch;
                             }
-                            return;
+                            break;
                         }
-                        else if (element[2] == "-r")
+                    default:
                         {
-                            ls.Sort();
-                            ls.Reverse();
-                            foreach (string list in ls)
-                            {
-                                Console.WriteLine(Path.GetFileName(list));
-                            }
-                            return;
-                        }
-                        else if (element[2] == "-X")
-                        {
-                            ls.Sort();
-                            foreach (string list in ls)
-                            {
-                                Console.WriteLine(Path.GetFileName(list));
-                            }
-                            return;
-                        }
-                        break;
-                    }
-                case "-r":
-                    {
-                        if (element[2] == "" || element[2] == "-r" || element[2] == "-X")
-                        {
-                            ls.Sort();
-                            ls.Reverse();
                             foreach (string list in ls)
                             {
                                 if ((File.GetAttributes(list) & FileAttributes.Hidden) == FileAttributes.Hidden)
@@ -149,59 +216,12 @@ namespace Termin
                                 else
                                     Console.WriteLine(Path.GetFileName(list));
                             }
-                            return;
+                            break;
                         }
-                        else if (element[2] == "-a")
-                        {
-                            ls.Sort();
-                            ls.Reverse();
-                            foreach (string list in ls)
-                            {
-                                Console.WriteLine(Path.GetFileName(list));
-                            }
-                            return;
-                        }                
-                        break;
-                    }
-                case "-X":
-                    {
-                        if (element[2] == "" || element[2] == "-X" || element[2] == "-r")
-                        {
-                            ls.Sort();
-                            foreach (string list in ls)
-                            {
-                                if ((File.GetAttributes(list) & FileAttributes.Hidden) == FileAttributes.Hidden)
-                                { }
-                                else
-                                    Console.WriteLine(Path.GetFileName(list));
-                            }
-                            return;
-                        }
-                        else if (element[2] == "-a")
-                        {
-                            ls.Sort();
-                            foreach (string list in ls)
-                            {
-                                Console.WriteLine(Path.GetFileName(list));
-                            }
-                            return;
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        foreach (string list in ls)
-                        {
-                            if ((File.GetAttributes(list) & FileAttributes.Hidden) == FileAttributes.Hidden)
-                            { }
-                            else
-                                Console.WriteLine(Path.GetFileName(list));
-                        }
-                        break;
-                    }
+                }
             }
-
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
         }
-       
+
     }
 }

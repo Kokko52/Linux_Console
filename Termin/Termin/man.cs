@@ -2,61 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Termin
 {
     class man
     {
+        //original string
         public string str;
-        public string err()
+        //list elements
+        public static string[] element = new string[] { };
+
+        public bool err()
         {
-            if(str == "man")
+            //getting string elements
+            element = str.Split(' ');
+
+            //add null elements
+            if (element.ElementAtOrDefault(1) == null)
             {
-                Console.WriteLine("command not found");
-                return "command not found";
+                Array.Resize(ref element, element.Length + 1);
+                element[element.Length - 1] = "";
             }
-            return "";
-        }
-        public bool help()
-        {
-            if (str == "")
+            if (str == "man --help")
             {
-                return false;
-            }
-            else
-            {
+                element[1] = "man";
                 return true;
             }
-            return true;
-        }
-        public bool key_1()
-        {
-            if (str == "")
+            if (element[1] == "")
             {
+                Console.WriteLine("\nman: missing operand\r\nTry 'man --help' for more information.\r\n");
                 return false;
             }
+
             return true;
         }
-        public bool key_2()
+        public void begin()
         {
-            if (str == "")
+            try
             {
-                return false;
+                help cls = new help();
+                cls.helping(element[1]);
+                Console.WriteLine();
             }
-            return true;
-        }
-        public bool key_3()
-        {
-            if (str == "")
-            {
-                return false;
-            }
-            return true;
-        }
-        public string print(bool k1, bool k2, bool k3, bool k4)
-        {
-            return "";
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
         }
     }
 }

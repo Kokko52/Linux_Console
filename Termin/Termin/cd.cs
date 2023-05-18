@@ -13,20 +13,43 @@ namespace Termin
         public static string directory_path = Environment.CurrentDirectory;
         public string keys()
         {
-            /*  [0] - commad
-                [1] - directory  */
-            string[] element = str.Split(' '); //получение отдельных элементов строки
             string path = "";
             try
             {
-                Directory.SetCurrentDirectory(element[1]);
-                path = Directory.GetCurrentDirectory();
-                var info = new DirectoryInfo(directory_path);
+                /*  [0] - commad
+                    [1] - directory  */
+                string[] element = str.Split(' '); //получение отдельных элементов строки
+                
+                try
+                {
+                    if (str == "cd --help")
+                    {
+                        help cls = new help();
+                        cls.helping("cd");
+                        Console.WriteLine();
+                        return "";
+                    }
+                    if (element.Length == 1)
+                    {
+                        Directory.SetCurrentDirectory(directory_path.Split('\\')[0] + "\\");
+                        path = Directory.GetCurrentDirectory();
+                        var info1 = new DirectoryInfo(directory_path);
+                    }
+                    else
+                    {
+                        Directory.SetCurrentDirectory(element[1]);
+                        path = Directory.GetCurrentDirectory();
+                        var info = new DirectoryInfo(directory_path);
+                    }
+                }
+                catch
+                {
+                    path = Environment.CurrentDirectory;
+                    Console.WriteLine("No such directory");
+                    return path;
+                }
             }
-            catch
-            {
-                Console.WriteLine("No such directory");
-            }
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
             return path;
         }
     }

@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,14 +43,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cat.cs" />
     <Compile Include="cd.cs" />
+    <Compile Include="cp.cs" />
+    <Compile Include="date.cs" />
+    <Compile Include="df.cs" />
+    <Compile Include="du.cs" />
+    <Compile Include="exit.cs" />
+    <Compile Include="head.cs" />
+    <Compile Include="help.cs" />
+    <Compile Include="hexdump.cs" />
+    <Compile Include="kill.cs" />
     <Compile Include="ls.cs" />
     <Compile Include="man.cs" />
     <Compile Include="mkdir.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ps.cs" />
     <Compile Include="pwd.cs" />
+    <Compile Include="pwgen.cs" />
+    <Compile Include="rm.cs" />
     <Compile Include="rmdir.cs" />
+    <Compile Include="tail.cs" />
+    <Compile Include="touch.cs" />
+    <Compile Include="uname.cs" />
+    <Compile Include="wc.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
